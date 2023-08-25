@@ -26,10 +26,15 @@ tracing = "0.1.26"
 hyper = "0.14.0"
 tokio = { version = "1.6.0", features = ["time"] }
 
-[target.'cfg(target_arch = "wasm32")'.dependencies]
-parking_lot = { version = "0.11.2", features = ["wasm-bindgen"] } # work around https://github.com/tomaka/wasm-timer/issues/14
-wasm-timer = "0.2.5"
-getrandom = { version = "0.2.0", features = ["js"] }
+# Note: Supporting WASM requires a dependency on `wasm-timer` which pulls in `parking_lot v0.11`,
+# which is an old version. Ideally we could update `wasm-timer` to use `parking_lot v0.12` but that
+# crate is unmaintained. Instead of forking `wasm-timer` and this crate, we just fork this crate
+# and remove the dependencies since we don't need to support WASM.
+# 
+# [target.'cfg(target_arch = "wasm32")'.dependencies]
+# parking_lot = { version = "0.11.2", features = ["wasm-bindgen"] } # work around https://github.com/tomaka/wasm-timer/issues/14
+# wasm-timer = "0.2.5"
+# getrandom = { version = "0.2.0", features = ["js"] }
 
 [dev-dependencies]
 paste = "1.0.0"
